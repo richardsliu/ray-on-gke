@@ -37,15 +37,9 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = true
   initial_node_count       = 1
 
-  #network    = google_compute_network.vpc.name
-  #subnetwork = google_compute_subnetwork.subnet.name
-
   logging_config {
     enable_components = ["SYSTEM_COMPONENTS", "WORKLOADS"]
   }
-
-  logging_service = "logging.googleapis.com/kubernetes"
-
 
   monitoring_config {
     enable_components = ["SYSTEM_COMPONENTS"]
@@ -53,8 +47,6 @@ resource "google_container_cluster" "primary" {
       enabled = "true"
     }
   }
-
-  monitoring_service = "monitoring.googleapis.com/kubernetes"
 }
 
 # Separately Managed Node Pool
