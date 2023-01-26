@@ -1,0 +1,14 @@
+hub:
+  config:
+    Authenticator:
+      admin_users:
+        - user1
+        - user2
+      allowed_users:
+        - user3
+        - user4
+    # ...
+    DummyAuthenticator:
+      password: password
+    JupyterHub:
+      authenticator_class: dummy
