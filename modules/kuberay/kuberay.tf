@@ -21,4 +21,5 @@ resource "helm_release" "kuberay-operator" {
 resource "helm_release" "ray-cluster" {
   name	     = "example-cluster"
   chart      = "./ray-cluster"
+  namespace  = var.namespace
 }

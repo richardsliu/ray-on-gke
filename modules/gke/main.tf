@@ -3,27 +3,16 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
-variable "project_id" {
-  description = "project id"
-}
-
-variable "region" {
-  description = "region"
-}
-
 provider "google" {
   project = var.project_id
   region  = var.region
 }
 
 # GKE cluster
-resource "google_container_cluster" "primary" {
+resource "google_container_cluster" "ml_cluster" {
   name     = "${var.project_id}-terraform"
   location = var.region
 
-  # We can't create a cluster with no node pool defined, but we want to only use
-  # separately managed node pools. So we create the smallest possible default
-  # node pool and immediately delete it.
   remove_default_node_pool = true
   initial_node_count       = 1
 
@@ -39,11 +28,10 @@ resource "google_container_cluster" "primary" {
   }
 }
 
-# Separately Managed Node Pool
-resource "google_container_node_pool" "primary_nodes" {
-  name       = google_container_cluster.primary.name
+resource "google_container_node_pool" "gpu_pool" {
+  name       = google_container_cluster.ml_cluster.name
   location   = var.region
-  cluster    = google_container_cluster.primary.name
+  cluster    = google_container_cluster.ml_cluster.name
   node_count = var.gke_num_nodes
 
   autoscaling {
@@ -81,5 +69,11 @@ resource "google_container_node_pool" "primary_nodes" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
+  }
+}
+
+resource "kubernetes_namespace" "ml" {
+  metadata {
+    name = var.namespace
   }
 }
