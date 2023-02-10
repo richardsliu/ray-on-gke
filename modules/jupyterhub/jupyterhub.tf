@@ -18,6 +18,7 @@ provider "helm" {
     host      = var.host
     token     = var.token
     cluster_ca_certificate  = var.ca_certificate
+  }
 }
 
 resource "helm_release" "jupyterhub" {
