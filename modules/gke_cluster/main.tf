@@ -8,6 +8,8 @@ provider "google" {
   region  = var.region
 }
 
+data "google_client_config" "provider" {}
+
 # GKE cluster
 resource "google_container_cluster" "ml_cluster" {
   name     = "${var.project_id}-terraform"
