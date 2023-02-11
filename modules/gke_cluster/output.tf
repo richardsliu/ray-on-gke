@@ -1,19 +1,19 @@
-output "host" {
-  description   =   "Kubernetes cluster endpoint"
-  value         =   "https://${data.google_container_cluster.ml_cluster.endpoint}"
-  sensitive     =   true
+output "project_id" {
+    description = "GCP project id"
+    value = resource.google_container_cluster.ml_cluster.project
 }
 
-output "token" {
-  description  =    "Kubernetes cluster token"
-  value        =    data.google_client_config.provider.access_token
-  sensitive    =    true
+output "region" {
+    description = "GCP region"
+    value = resource.google_container_cluster.ml_cluster.location
 }
 
-output "ca_certificate" {
-  description  =    "Kubernetes cluster ca certificate"
-  value        =    base64decode(
-    data.google_container_cluster.ml_cluster.master_auth[0].cluster_ca_certificate,
-  )
-  sensitive    =    true
+output "cluster_name" {
+    description = "The name of the GKE cluster"
+    value = resource.google_container_cluster.ml_cluster.name 
+}
+
+output "kubernetes_host" {
+    description = "Kubernetes cluster host"
+    value = resource.google_container_cluster.ml_cluster.endpoint
 }

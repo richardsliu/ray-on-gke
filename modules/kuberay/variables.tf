@@ -1,16 +1,13 @@
-variable "host" {
-  type          =   string
-  description   =   "Kubernetes cluster endpoint"
+variable "region" {
+    type = string
+    description = "GCP project region or zone"
+    default = "us-central1"
 }
 
-variable "token" {
-  type          =   string
-  description   =   "Kubernetes cluster token"
-}
-
-variable "ca_certificate" {
+variable "cluster_name" {
   type         =    string
-  description  =    "Kubernetes cluster ca certificate"
+  description  =    "Kubernetes cluster name"
+  default      =    "ml-cluster"
 }
 
 variable "namespace" {

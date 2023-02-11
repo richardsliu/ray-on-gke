@@ -8,11 +8,10 @@ provider "google" {
   region  = var.region
 }
 
-data "google_client_config" "provider" {}
 
 # GKE cluster
 resource "google_container_cluster" "ml_cluster" {
-  name     = "${var.project_id}-terraform"
+  name     = var.cluster_name
   location = var.region
 
   remove_default_node_pool = true
@@ -71,11 +70,5 @@ resource "google_container_node_pool" "gpu_pool" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
-  }
-}
-
-resource "kubernetes_namespace" "ml" {
-  metadata {
-    name = var.namespace
   }
 }

@@ -10,6 +10,12 @@ variable "region" {
     default = "us-central1"
 }
 
+variable "cluster_name" {
+    type = string
+    description = "GKE cluster name"
+    default = "ml-cluster"
+}
+
 variable "namespace" {
     type = string
     description = "Kubernetes namespace where resources are deployed"

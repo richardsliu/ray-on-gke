@@ -5,20 +5,26 @@ module "gke_cluster" {
   region = var.region
 }
 
+module "kubernetes" {
+  source    = "./modules/kuberay"
+
+  region       = var.region
+  cluster_name = var.cluster_name
+  namespace    = var.namespace
+}
+
 module "kuberay" {
   source    = "./modules/kuberay"
 
-  host         = module.gke_cluster.host
-  token        = module.gke_cluster.token
-  ca_certificate = module.gke_cluster.ca_certificate
+  region       = var.region
+  cluster_name = var.cluster_name 
   namespace    = var.namespace
 }
 
 module "jupyterhub" {
   source    = "./modules/jupyterhub"
 
-  host         = module.gke_cluster.host
-  token        = module.gke_cluster.token
-  ca_certificate = module.gke_cluster.ca_certificate
+  region        = var.region
+  cluster_name  = var.cluster_name
   namespace   = var.namespace
 }
