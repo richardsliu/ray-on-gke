@@ -17,3 +17,9 @@ output "kubernetes_host" {
     description = "Kubernetes cluster host"
     value = resource.google_container_cluster.ml_cluster.endpoint
 }
+
+output "cluster_certicicate" {
+    description = "Kubernetes cluster ca certificate"
+    value = base64decode(resource.google_container_cluster.ml_cluster.master_auth[0].cluster_ca_certificate)
+    sensitive = true
+}
