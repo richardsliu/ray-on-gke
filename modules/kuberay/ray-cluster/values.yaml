@@ -6,8 +6,11 @@
 # in this Helm chart.
 
 image:
-  repository: gcr.io/ricliu-gke-dev/ray-trainer     #rayproject/ray
-  tag: ray-2.3.0-py39
+  # Replace this with your own image, e.g.:
+  #   repository: gcr.io/ricliu-gke-dev/ray-trainer
+  #   tag: ray-2.3.0-py39
+  repository: rayproject/ray
+  tag: 2.3.0 
   pullPolicy: IfNotPresent
 
 nameOverride: "kuberay"
