@@ -1,33 +1,3 @@
-# Fluent Bit ConfigMap
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: fluentbit-config
-data:
-  fluent-bit.conf: |
-    [INPUT]
-        Name tail
-        Path /tmp/ray/session_latest/logs/*
-        Tag ray
-        Path_Key true
-        Refresh_Interval 5
-    [OUTPUT]
-        Name stdout
-        Match *
----
-# Prometheus monitoring config
-apiVersion: monitoring.googleapis.com/v1
-kind: PodMonitoring
-metadata:
-  name: ray-monitoring
-spec:
-  selector:
-    matchLabels:
-      ray.io/is-ray-node: "yes"
-  endpoints:
-  - port: metrics
-    interval: 30s
----
 apiVersion: ray.io/v1alpha1
 kind: RayCluster
 metadata:

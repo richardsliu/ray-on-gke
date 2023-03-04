@@ -21,7 +21,7 @@ provider "kubernetes" {
 }
 
 provider "kubectl" {
-  load_config_file       = false
+  ###load_config_file       = false
   host                   = data.google_container_cluster.ml_cluster.endpoint
   token                  = data.google_client_config.provider.access_token
   cluster_ca_certificate = base64decode(
@@ -63,6 +63,13 @@ module "kuberay" {
   region       = var.region
   cluster_name = var.cluster_name 
   namespace    = var.namespace
+}
+
+module "prometheus" {
+  source    = "./modules/prometheus"
+  
+  depends_on =  [ module.kuberay ]
+  project_id = var.project_id
 }
 
 module "jupyterhub" {
