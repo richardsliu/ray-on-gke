@@ -11,13 +11,16 @@ data "http" "prometheus_grafana_yaml" {
 }
 
 resource "kubectl_manifest" "pod_monitor" {
+  override_namespace = var.namespace
   yaml_body = data.local_file.pod_monitor_yaml.content
 }
 
 resource "kubectl_manifest" "prometheus_frontend" {
+  override_namespace = var.namespace
   yaml_body = replace(data.http.prometheus_frontend_yaml.body, "$PROJECT_ID", var.project_id)
 }
 
 resource "kubectl_manifest" "prometheus_grafana" {
+  override_namespace = var.namespace
   yaml_body = data.http.prometheus_grafana_yaml.body
 }

@@ -70,6 +70,7 @@ module "prometheus" {
   
   depends_on =  [ module.kuberay ]
   project_id = var.project_id
+  namespace  = var.namespace
 }
 
 module "jupyterhub" {
