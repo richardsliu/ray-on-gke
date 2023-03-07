@@ -7,15 +7,16 @@ data "local_file" "fluentd_config_yaml" {
 }
 
 resource "kubectl_manifest" "nvidia_driver_installer" {
-  yaml_body = data.http.nvidia_driver_installer_manifest.body
-}
-
-resource "kubectl_manifest" "fluentd_config" {
-  yaml_body = data.local_file.fluentd_config_yaml.content
+  yaml_body = data.http.nvidia_driver_installer_manifest.response_body
 }
 
 resource "kubernetes_namespace" "ml" {
   metadata {
     name = var.namespace
   }
+}
+
+resource "kubectl_manifest" "fluentd_config" {
+  override_namespace = var.namespace
+  yaml_body = data.local_file.fluentd_config_yaml.content
 }
