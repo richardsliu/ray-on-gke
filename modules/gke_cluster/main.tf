@@ -27,6 +27,10 @@ resource "google_container_cluster" "ml_cluster" {
       enabled = "true"
     }
   }
+
+  workload_identity_config {
+    workload_pool = "${var.project_id}.svc.id.goog"
+  }
 }
 
 resource "google_container_node_pool" "gpu_pool" {

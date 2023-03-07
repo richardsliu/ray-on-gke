@@ -75,7 +75,8 @@ head:
       cpu: "1"
       memory: "2G"
   annotations: {}
-  nodeSelector: {}
+  nodeSelector:
+    iam.gke.io/gke-metadata-server-enabled: "true"
   tolerations: []
   affinity: {}
   # Ray container security context.
@@ -152,7 +153,8 @@ worker:
       memory: "1G"
   annotations:
     key: value
-  nodeSelector: {}
+  nodeSelector:
+    iam.gke.io/gke-metadata-server-enabled: "true"
   tolerations: []
   affinity: {}
   # Ray container security context.
