@@ -71,9 +71,11 @@ head:
       cpu: "1"
       # To avoid out-of-memory issues, never allocate less than 2G memory for the Ray head.
       memory: "2G"
+      ephemeral-storage: 4Gi
     requests:
       cpu: "1"
       memory: "2G"
+      ephemeral-storage: 2Gi
   annotations: {}
   nodeSelector:
     iam.gke.io/gke-metadata-server-enabled: "true"
@@ -101,9 +103,11 @@ head:
         requests:
           cpu: 100m
           memory: 128Mi
+          ephemeral-storage: 2Gi
         limits:
           cpu: 100m
           memory: 128Mi
+          ephemeral-storage: 4Gi
       volumeMounts:
       - mountPath: /tmp/ray
         name: ray-logs
@@ -148,9 +152,11 @@ worker:
     limits:
       cpu: "1"
       memory: "1G"
+      ephemeral-storage: 4Gi
     requests:
       cpu: "1"
       memory: "1G"
+      ephemeral-storage: 2Gi
   annotations:
     key: value
   nodeSelector:
@@ -179,9 +185,11 @@ worker:
         requests:
           cpu: 100m
           memory: 128Mi
+          ephemeral-storage: 2Gi
         limits:
           cpu: 100m
           memory: 128Mi
+          ephemeral-storage: 4Gi
       volumeMounts:
       - mountPath: /tmp/ray
         name: ray-logs
