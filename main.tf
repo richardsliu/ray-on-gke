@@ -64,7 +64,6 @@ module "gke_cluster" {
 module "kubernetes" {
   source    = "./modules/kubernetes"
 
-  depends_on = [ module.gke_cluster ]
   region       = var.region
   cluster_name = var.cluster_name
   namespace    = var.namespace
@@ -81,7 +80,7 @@ module "service_accounts" {
 module "kuberay" {
   source    = "./modules/kuberay"
 
-  depends_on  = [ module.gke_cluster, module.kubernetes ]
+  depends_on  = [ module.kubernetes ]
   region       = var.region
   cluster_name = var.cluster_name 
   namespace    = var.namespace
@@ -98,7 +97,7 @@ module "prometheus" {
 module "jupyterhub" {
   source    = "./modules/jupyterhub"
 
-  depends_on = [ module.gke_cluster, module.kubernetes ]
+  depends_on = [ module.kubernetes ]
   region        = var.region
   cluster_name  = var.cluster_name
   namespace   = var.namespace
