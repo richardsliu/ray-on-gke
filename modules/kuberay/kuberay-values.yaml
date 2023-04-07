@@ -21,10 +21,10 @@
 
 image:
   # Replace this with your own image, e.g.:
-  #   repository: gcr.io/ricliu-gke-dev/ray-trainer
-  #   tag: ray-2.3.0-py39
-  repository: rayproject/ray
-  tag: 2.3.0-py310
+  repository: gcr.io/ricliu-gke-dev/ray-trainer-gpu
+  tag: ray-2.3.0-py310-python
+  #repository: rayproject/ray
+  #tag: 2.3.0-py310
   pullPolicy: IfNotPresent
 
 nameOverride: "kuberay"
@@ -63,9 +63,11 @@ head:
     block: 'true'
   # containerEnv specifies environment variables for the Ray container,
   # Follows standard K8s container env schema.
-  containerEnv: []
+  containerEnv:
   # - name: EXAMPLE_ENV
   #   value: "1"
+    - name: RAY_memory_monitor_refresh_ms
+      value: "0"
   envFrom: []
     # - secretRef:
     #     name: my-env-secret
@@ -83,13 +85,15 @@ head:
   resources:
     limits:
       cpu: "1"
+      nvidia.com/gpu: "1"
       # To avoid out-of-memory issues, never allocate less than 2G memory for the Ray head.
       memory: "2G"
-      ephemeral-storage: 4Gi
+      ephemeral-storage: 20Gi
     requests:
       cpu: "1"
+      nvidia.com/gpu: "1"
       memory: "2G"
-      ephemeral-storage: 2Gi
+      ephemeral-storage: 10Gi
   annotations: {}
   nodeSelector:
     iam.gke.io/gke-metadata-server-enabled: "true"
@@ -134,7 +138,7 @@ worker:
   # uncomment the line below
   # disabled: true
   groupName: workergroup
-  replicas: 1
+  replicas: 2
   type: worker
   # labels:
   #   key: value
@@ -165,12 +169,14 @@ worker:
   resources:
     limits:
       cpu: "1"
-      memory: "1G"
-      ephemeral-storage: 4Gi
+      nvidia.com/gpu: "1"
+      memory: "4G"
+      ephemeral-storage: 20Gi
     requests:
       cpu: "1"
-      memory: "1G"
-      ephemeral-storage: 2Gi
+      nvidia.com/gpu: "1"
+      memory: "4G"
+      ephemeral-storage: 10Gi
   annotations:
     key: value
   nodeSelector:

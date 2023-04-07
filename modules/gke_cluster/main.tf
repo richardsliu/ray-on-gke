@@ -12,11 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "gke_num_nodes" {
-  default     = 3
-  description = "number of gke nodes"
-}
-
 provider "google" {
   project = var.project_id
   region  = var.region
@@ -28,7 +23,6 @@ resource "google_container_cluster" "ml_cluster" {
   name     = var.cluster_name
   location = var.region
 
-  remove_default_node_pool = true
   initial_node_count       = 1
 
   logging_config {
@@ -48,13 +42,13 @@ resource "google_container_cluster" "ml_cluster" {
 }
 
 resource "google_container_node_pool" "gpu_pool" {
-  name       = google_container_cluster.ml_cluster.name
+  name       = "gpu-pool"
   location   = var.region
   cluster    = google_container_cluster.ml_cluster.name
-  node_count = var.gke_num_nodes
+  node_count = var.num_gpu_nodes
 
   autoscaling {
-    min_node_count = "1"
+    min_node_count = "3"
     max_node_count = "5"
   }
 
@@ -82,7 +76,7 @@ resource "google_container_node_pool" "gpu_pool" {
     machine_type = "a2-highgpu-1g"
     tags         = ["gke-node", "${var.project_id}-gke"]
 
-    disk_size_gb = "30"
+    disk_size_gb = "100"
     disk_type    = "pd-standard"
 
     metadata = {

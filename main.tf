@@ -26,7 +26,6 @@ provider "google" {
 }
 
 provider "kubernetes" {
-    ##config_path = pathexpand("~/.kube/config")
     host =  data.google_container_cluster.ml_cluster.endpoint
     token                  = data.google_client_config.provider.access_token
     cluster_ca_certificate =  base64decode(
@@ -64,6 +63,7 @@ module "gke_cluster" {
 module "kubernetes" {
   source    = "./modules/kubernetes"
 
+  depends_on = [ module.gke_cluster ]
   region       = var.region
   cluster_name = var.cluster_name
   namespace    = var.namespace
