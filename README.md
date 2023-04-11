@@ -1,12 +1,41 @@
-# terraform-kuberay
+# Ray on GKE
+
+The solution is split into `platform` and `user` resources. 
+
+Platform resources (deployed once):
+* GKE Cluster
+* Nvidia GPU drivers
+* Kuberay operator and CRDs
+
+User resources (deployed once per user):
+* User namespace
+* Kubernetes service accounts
+* Kuberay cluster
+* Prometheus monitoring
+* Logging container
+* Jupyter notebook
 
 ## Installation
 
-1. Edit `variables.tf` with your GCP settings.
+### Platform
 
-2. Run `terraform init`
+1. `cd platform`
 
-3. Run `terraform apply`
+2. Edit `variables.tf` with your GCP settings.
+
+3. Run `terraform init`
+
+4. Run `terraform apply`
+
+### User
+
+1. `cd user`
+
+2. Edit `variables.tf` with your GCP settings.
+
+3. Run `terraform init`
+
+4. Run `terraform apply`
 
 ## Using Ray
 
