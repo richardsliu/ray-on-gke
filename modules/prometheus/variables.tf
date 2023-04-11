@@ -13,12 +13,12 @@
 # limitations under the License.
 
 variable "project_id" {
-  type         =    string
-  description  =    "GCP project id"
+  type        = string
+  description = "GCP project id"
 }
 
 variable "namespace" {
-    type = string
-    description = "Kubernetes namespace where resources are deployed"
-    default = "ray"
+  type        = string
+  description = "Kubernetes namespace where resources are deployed"
+  default     = "ray"
 }

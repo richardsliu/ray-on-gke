@@ -27,7 +27,7 @@ resource "google_service_account_iam_binding" "workload-identity-user" {
 }
 
 resource "google_project_iam_binding" "monitoring-viewer" {
-  project = "${var.project_id}"
+  project = var.project_id
   role    = "roles/monitoring.viewer"
 
   members = [

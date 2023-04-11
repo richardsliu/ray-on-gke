@@ -23,7 +23,7 @@ resource "google_container_cluster" "ml_cluster" {
   name     = var.cluster_name
   location = var.region
 
-  initial_node_count       = 1
+  initial_node_count = 1
 
   logging_config {
     enable_components = ["SYSTEM_COMPONENTS", "WORKLOADS"]

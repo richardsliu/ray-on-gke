@@ -19,7 +19,7 @@ resource "helm_release" "kuberay-operator" {
 }
 
 resource "helm_release" "ray-cluster" {
-  name	     = "example-cluster"
+  name       = "example-cluster"
   repository = "https://ray-project.github.io/kuberay-helm/"
   chart      = "ray-cluster"
   namespace  = var.namespace

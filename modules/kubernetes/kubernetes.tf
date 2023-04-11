@@ -32,5 +32,5 @@ resource "kubernetes_namespace" "ml" {
 
 resource "kubectl_manifest" "fluentd_config" {
   override_namespace = var.namespace
-  yaml_body = data.local_file.fluentd_config_yaml.content
+  yaml_body          = data.local_file.fluentd_config_yaml.content
 }
