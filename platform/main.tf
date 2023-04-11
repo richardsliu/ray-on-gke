@@ -34,7 +34,6 @@ provider "kubernetes" {
 }
 
 provider "kubectl" {
-  ###load_config_file       = false
   host  = data.google_container_cluster.ml_cluster.endpoint
   token = data.google_client_config.provider.access_token
   cluster_ca_certificate = base64decode(
@@ -66,15 +65,6 @@ module "kubernetes" {
   depends_on   = [module.gke_cluster]
   region       = var.region
   cluster_name = var.cluster_name
-  namespace    = var.namespace
-}
-
-module "service_accounts" {
-  source = "./modules/service_accounts"
-
-  depends_on = [module.kubernetes]
-  project_id = var.project_id
-  namespace  = var.namespace
 }
 
 module "kuberay" {
@@ -83,22 +73,4 @@ module "kuberay" {
   depends_on   = [module.kubernetes]
   region       = var.region
   cluster_name = var.cluster_name
-  namespace    = var.namespace
-}
-
-module "prometheus" {
-  source = "./modules/prometheus"
-
-  depends_on = [module.kuberay]
-  project_id = var.project_id
-  namespace  = var.namespace
-}
-
-module "jupyterhub" {
-  source = "./modules/jupyterhub"
-
-  depends_on   = [module.kubernetes]
-  region       = var.region
-  cluster_name = var.cluster_name
-  namespace    = var.namespace
 }

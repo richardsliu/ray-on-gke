@@ -12,18 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "helm_release" "kuberay-operator" {
-  name       = "kuberay-operator"
-  repository = "https://ray-project.github.io/kuberay-helm/"
-  chart      = "kuberay-operator"
+data "http" "nvidia_driver_installer_manifest" {
+  url = "https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/master/nvidia-driver-installer/cos/daemonset-preloaded.yaml"
 }
 
-resource "helm_release" "ray-cluster" {
-  name       = "example-cluster"
-  repository = "https://ray-project.github.io/kuberay-helm/"
-  chart      = "ray-cluster"
-  namespace  = var.namespace
-  values = [
-    file("${path.module}/kuberay-values.yaml")
-  ]
+resource "kubectl_manifest" "nvidia_driver_installer" {
+  yaml_body = data.http.nvidia_driver_installer_manifest.response_body
 }

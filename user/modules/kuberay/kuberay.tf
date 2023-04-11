@@ -12,20 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "region" {
-  type        = string
-  description = "GCP project region or zone"
-  default     = "us-central1"
-}
-
-variable "cluster_name" {
-  type        = string
-  description = "Kubernetes cluster name"
-  default     = "ml-cluster"
-}
-
-variable "namespace" {
-  type        = string
-  description = "Kubernetes namespace where resources are deployed"
-  default     = "ray"
+resource "helm_release" "ray-cluster" {
+  name       = "example-cluster"
+  repository = "https://ray-project.github.io/kuberay-helm/"
+  chart      = "ray-cluster"
+  namespace  = var.namespace
+  values = [
+    file("${path.module}/kuberay-values.yaml")
+  ]
 }

@@ -29,9 +29,3 @@ variable "cluster_name" {
   description = "GKE cluster name"
   default     = "ml-cluster"
 }
-
-variable "namespace" {
-  type        = string
-  description = "Kubernetes namespace where resources are deployed"
-  default     = "ray"
-}
