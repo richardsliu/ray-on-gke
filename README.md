@@ -41,8 +41,8 @@ User resources (deployed once per user):
 
 1. Run `kubectl get services -n <namespace>`
 
-2. Copy the external IP
+2. Copy the external IP for the notebook.
 
 3. Open the external IP in a browser and login.
 
-4. The Ray cluster is available at `ray://example-cluster-kuberay-head-svc:10001`.
+4. The Ray cluster is available at `ray://example-cluster-kuberay-head-svc:10001`. To access the cluster, you can open one of the sample notebooks under `example_notebooks` (via `File` -> `Open from URL` in the Jupyter notebook window) and run through the example.
