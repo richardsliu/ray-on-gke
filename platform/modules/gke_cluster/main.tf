@@ -68,6 +68,7 @@ resource "google_container_node_pool" "gpu_pool" {
     ]
 
     labels = {
+      "cloud.google.com/gke-profile" = "ray"
       env = var.project_id
     }
 

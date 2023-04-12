@@ -19,7 +19,7 @@ provider "kubernetes" {
 }
 
 provider "kubectl" {
-  config_path = pathexpand("~/.kube/config")  
+  config_path = pathexpand("~/.kube/config")
 }
 
 provider "helm" {
@@ -31,7 +31,7 @@ provider "helm" {
 module "kubernetes" {
   source = "./modules/kubernetes"
 
-  namespace    = var.namespace
+  namespace = var.namespace
 }
 
 module "service_accounts" {
@@ -45,8 +45,8 @@ module "service_accounts" {
 module "kuberay" {
   source = "./modules/kuberay"
 
-  depends_on   = [module.kubernetes]
-  namespace    = var.namespace
+  depends_on = [module.kubernetes]
+  namespace  = var.namespace
 }
 
 module "prometheus" {
@@ -60,6 +60,6 @@ module "prometheus" {
 module "jupyterhub" {
   source = "./modules/jupyterhub"
 
-  depends_on   = [module.kubernetes]
-  namespace    = var.namespace
+  depends_on = [module.kubernetes]
+  namespace  = var.namespace
 }

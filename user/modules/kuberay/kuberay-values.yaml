@@ -56,8 +56,8 @@ head:
     #   requests:
     #     cpu: "500m"
     #     memory: "512Mi"
-  # labels:
-  #   key: value
+  labels:
+    cloud.google.com/gke-ray-node-type: head
   rayStartParams:
     dashboard-host: '0.0.0.0'
     block: 'true'
@@ -140,8 +140,8 @@ worker:
   groupName: workergroup
   replicas: 2
   type: worker
-  # labels:
-  #   key: value
+  labels:
+    cloud.google.com/gke-ray-node-type: worker
   rayStartParams:
     block: 'true'
   initContainerImage: 'busybox:1.28'  # Enable users to specify the image for init container. Users can pull the busybox image from their private repositories.

@@ -14,6 +14,9 @@
 
 terraform {
   required_providers {
+    google = {
+      source = "hashicorp/google"
+    }
     helm = {
       source  = "hashicorp/helm"
       version = "~> 2.8.0"
@@ -26,5 +29,8 @@ terraform {
       source  = "alekc/kubectl"
       version = "2.0.1"
     }
+  }
+  provider_meta "google" {
+    module_name = "blueprints/terraform/terraform-google-kubernetes-engine:kuberay/v0.1.0"
   }
 }
