@@ -1,5 +1,9 @@
 # Ray on GKE
 
+This repository contains a Terraform template for running [Ray](https://www.ray.io/) on Google Kubernetes Engine.
+We've also included some example notebooks, including one that serves a GPT-J-6B model with Ray AIR (see
+[here](https://docs.ray.io/en/master/ray-air/examples/gptj_serving.html) for the original notebook).
+
 The solution is split into `platform` and `user` resources. 
 
 Platform resources (deployed once):
@@ -46,3 +50,23 @@ User resources (deployed once per user):
 3. Open the external IP in a browser and login.
 
 4. The Ray cluster is available at `ray://example-cluster-kuberay-head-svc:10001`. To access the cluster, you can open one of the sample notebooks under `example_notebooks` (via `File` -> `Open from URL` in the Jupyter notebook window) and run through the example.
+
+## Running GPT-J-6B
+
+This example is adapted from Ray AIR's examples [here](https://docs.ray.io/en/master/ray-air/examples/gptj_serving.html).
+
+1. Open the `gpt-j-online.ipynb` notebook.
+
+2. Open a terminal in the Jupyter session and install Ray AIR:
+```
+pip install ray[air]
+```
+
+3. Run through the notebook cells. You can change the prompt in the last cell:
+```
+prompt = (
+     ## Input your own prompt here
+)
+```
+
+4. This should output a generated text response.
