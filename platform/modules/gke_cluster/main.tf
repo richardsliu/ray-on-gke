@@ -23,7 +23,7 @@ resource "google_container_cluster" "ml_cluster" {
   name     = var.cluster_name
   location = var.region
 
-  initial_node_count = 1
+  initial_node_count = 3
 
   logging_config {
     enable_components = ["SYSTEM_COMPONENTS", "WORKLOADS"]
@@ -48,8 +48,8 @@ resource "google_container_node_pool" "gpu_pool" {
   node_count = var.num_gpu_nodes
 
   autoscaling {
-    min_node_count = "3"
-    max_node_count = "5"
+    min_node_count = "1"
+    max_node_count = "3"
   }
 
   management {

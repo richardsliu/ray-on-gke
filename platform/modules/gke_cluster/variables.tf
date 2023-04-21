@@ -38,5 +38,5 @@ variable "namespace" {
 
 variable "num_gpu_nodes" {
   description = "Number of GPU nodes in the cluster"
-  default     = 3
+  default     = 1
 }
