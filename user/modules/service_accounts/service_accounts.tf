@@ -13,6 +13,7 @@
 # limitations under the License.
 
 resource "google_service_account" "sa" {
+  project      = "${var.project_id}"
   account_id   = "${var.namespace}-gmp-account"
   display_name = "Managed prometheus service account"
 }
