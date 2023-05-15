@@ -20,11 +20,9 @@
 # in this Helm chart.
 
 image:
-  # Replace this with your own image, e.g.:
-  repository: gcr.io/ricliu-gke-dev/ray-gpt-j
-  tag: ray-2.3.0-py310
-  #repository: rayproject/ray
-  #tag: 2.3.0-py310
+  # Replace this with your own image if needed.
+  repository: rayproject/ray
+  tag: 2.3.0-py310
   pullPolicy: IfNotPresent
 
 nameOverride: "kuberay"

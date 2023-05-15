@@ -49,7 +49,18 @@ User resources (deployed once per user):
 
 3. Open the external IP in a browser and login.
 
-4. The Ray cluster is available at `ray://example-cluster-kuberay-head-svc:10001`. To access the cluster, you can open one of the sample notebooks under `example_notebooks` (via `File` -> `Open from URL` in the Jupyter notebook window) and run through the example.
+4. The Ray cluster is available at `ray://example-cluster-kuberay-head-svc:10001`. To access the cluster, you can open one of the sample notebooks under `example_notebooks` (via `File` -> `Open from URL` in the Jupyter notebook window and use the raw file URL from GitHub) and run through the example.
+
+## Securing Your Cluster Endpoints
+
+For demo purposes, this repo creates a public IP for the Ray head node and the
+Jupyter notebook. To secure your cluster, it is *strong recommended* to replace
+this with your own secure endpoints. 
+
+For more information, please take a look at the following links:
+* https://cloud.google.com/iap/docs/enabling-kubernetes-howto
+* https://cloud.google.com/endpoints/docs/openapi/get-started-kubernetes-engine
+
 
 ## Running GPT-J-6B
 
