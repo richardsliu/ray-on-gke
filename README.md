@@ -49,7 +49,7 @@ User resources (deployed once per user):
 
 3. Open the external IP in a browser and login.
 
-4. The Ray cluster is available at `ray://example-cluster-kuberay-head-svc:10001`. To access the cluster, you can open one of the sample notebooks under `example_notebooks` (via `File` -> `Open from URL` in the Jupyter notebook window and use the raw file URL from GitHub) and run through the example.
+4. The Ray cluster is available at `ray://example-cluster-kuberay-head-svc:10001`. To access the cluster, you can open one of the sample notebooks under `example_notebooks` (via `File` -> `Open from URL` in the Jupyter notebook window and use the raw file URL from GitHub) and run through the example. Ex url: https://raw.githubusercontent.com/richardsliu/ray-on-gke/main/example_notebooks/gpt-j-online.ipynb
 
 ## Securing Your Cluster Endpoints
 
