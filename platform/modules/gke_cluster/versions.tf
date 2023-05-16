@@ -15,4 +15,7 @@
 terraform {
   required_providers {
   }
+  provider_meta "google" {
+    module_name = "blueprints/terraform/terraform-google-kubernetes-engine:kuberay/v0.1.0"
+  }
 }
