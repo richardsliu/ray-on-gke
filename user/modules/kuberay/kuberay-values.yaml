@@ -275,4 +275,4 @@ additionalWorkerGroups:
     sidecarContainers: []
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
