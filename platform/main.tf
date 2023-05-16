@@ -55,8 +55,9 @@ provider "helm" {
 module "gke_cluster" {
   source = "./modules/gke_cluster"
 
-  project_id = var.project_id
-  region     = var.region
+  project_id   = var.project_id
+  region       = var.region
+  cluster_name = var.cluster_name
 }
 
 module "kubernetes" {
