@@ -40,6 +40,7 @@ module "service_accounts" {
   depends_on = [module.kubernetes]
   project_id = var.project_id
   namespace  = var.namespace
+  service_account = var.service_account
 }
 
 module "kuberay" {

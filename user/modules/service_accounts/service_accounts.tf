@@ -14,7 +14,7 @@
 
 resource "google_service_account" "sa" {
   project      = "${var.project_id}"
-  account_id   = "${var.namespace}-gmp-account"
+  account_id   = "${var.service_account}"
   display_name = "Managed prometheus service account"
 }
 

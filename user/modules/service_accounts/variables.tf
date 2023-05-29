@@ -22,3 +22,9 @@ variable "namespace" {
   description = "Kubernetes namespace where resources are deployed"
   default     = "ray"
 }
+
+variable "service_account" {
+  type        = string
+  description = "Google Cloud IAM service account for authenticating with GCP services"
+  default     = "ray-system-account"
+}
