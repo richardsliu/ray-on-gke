@@ -17,7 +17,7 @@ data "google_client_config" "provider" {}
 data "google_container_cluster" "ml_cluster" {
   name       = var.cluster_name
   location   = var.region
-  depends_on = [module.gke_cluster]
+  depends_on = [module.gke_autopilot, module.gke_standard]
 }
 
 provider "google" {
@@ -52,26 +52,38 @@ provider "helm" {
   }
 }
 
-module "gke_cluster" {
-  source = "./modules/gke_cluster"
+module "gke_autopilot" {
+  source = "./modules/gke_autopilot"
 
   project_id   = var.project_id
   region       = var.region
   cluster_name = var.cluster_name
+  enable_autopilot = var.enable_autopilot
+}
+
+
+module "gke_standard" {
+  source = "./modules/gke_standard"
+
+  project_id   = var.project_id
+  region       = var.region
+  cluster_name = var.cluster_name
+  enable_autopilot = var.enable_autopilot
 }
 
 module "kubernetes" {
   source = "./modules/kubernetes"
 
-  depends_on   = [module.gke_cluster]
+  depends_on   = [module.gke_standard]
   region       = var.region
   cluster_name = var.cluster_name
+  enable_autopilot = var.enable_autopilot
 }
 
 module "kuberay" {
   source = "./modules/kuberay"
 
-  depends_on   = [module.kubernetes]
+  depends_on   = [module.gke_autopilot, module.gke_standard]
   region       = var.region
   cluster_name = var.cluster_name
 }
