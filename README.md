@@ -32,7 +32,10 @@ If you need to reinstall any resources, make sure to delete this file as well.
 
 3. Run `terraform init`
 
-4. Run `terraform apply`
+4. Get the GKE cluster name and location/region from `platform/variables.tf`. 
+   Run `gcloud container clusters get-credentials %gke_cluster_name% --location=%location%`
+
+5. Run `terraform apply`
 
 ### User
 
@@ -42,7 +45,10 @@ If you need to reinstall any resources, make sure to delete this file as well.
 
 3. Run `terraform init`
 
-4. Run `terraform apply`
+4. Get the GKE cluster name and location/region from `platform/variables.tf`.
+   Run `gcloud container clusters get-credentials %gke_cluster_name% --location=%location%`
+
+5. Run `terraform apply`
 
 ## Using Ray
 
@@ -104,12 +110,15 @@ This repository comes with out-of-the-box integrations with Google Cloud Logging
 and Managed Prometheus for monitoring. To see your Ray cluster logs:
 
 1. Open Cloud Console and open Logging
-2. Use the following query parameters:
+2. Note the job ID returned by the `ray job submit` API.
+   Job submission: `ray job submit --working-dir /Users/imreddy/ray_working_directory  -- python script.py`
+   Job submission ID: `Job 'raysubmit_kFWB6VkfyqK1CbEV' submitted successfully`
+3. Get the namespace name from `user/variables.tf` or `kubectl get namespaces`
+4. Use the following query to search for the job logs:
+
 ```
-resource.type="k8s_container"
-resource.labels.cluster_name=%CLUSTER_NAME%
-resource.labels.pod_name=%RAY_HEAD_POD_NAME%
-resource.labels.container_name="fluentbit"
+resource.labels.namespace_name=%NAMESPACE_NAME%
+jsonpayload.job_id=%RAY_JOB_ID%
 ```
 
 To see monitoring metrics:
