@@ -26,6 +26,24 @@ hub:
       password: password
     JupyterHub:
       authenticator_class: dummy
+  networkPolicy:
+    enabled: false
+
+prePuller:
+  hook:
+    enabled: false
+
+proxy:
+  chp:
+    networkPolicy:
+      enabled: false
+  traefik:
+    networkPolicy:
+      enabled: false
+
+scheduling:
+  userScheduler:
+    enabled: false
 
 singleuser:
   nodeSelector:
@@ -40,3 +58,7 @@ singleuser:
   # `cmd: null` allows the custom CMD of the Jupyter docker-stacks to be used
   # which performs further customization on startup.
   cmd: null
+  cloudMetadata:
+    blockWithIptables: false
+  networkPolicy:
+    enabled: false

@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+variable "project_id" {
+  type        = string
+  description = "GCP project id"
+  default     = "ricliu-gke-dev"
+}
+
 variable "region" {
   type        = string
   description = "GCP project region or zone"
@@ -20,7 +26,7 @@ variable "region" {
 
 variable "cluster_name" {
   type        = string
-  description = "Kubernetes cluster name"
+  description = "GKE cluster name"
   default     = "ml-cluster"
 }
 
@@ -28,6 +34,11 @@ variable "namespace" {
   type        = string
   description = "Kubernetes namespace where resources are deployed"
   default     = "ray"
+}
+
+variable "num_gpu_nodes" {
+  description = "Number of GPU nodes in the cluster"
+  default     = 1
 }
 
 variable "enable_autopilot" {
