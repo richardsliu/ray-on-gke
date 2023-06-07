@@ -128,8 +128,7 @@ head:
       volumeMounts:
       - mountPath: /tmp/ray
         name: ray-logs
-      - mountPath: /fluent-bit/etc/fluent-bit.conf
-        subPath: fluent-bit.conf
+      - mountPath: /fluent-bit/etc/
         name: fluentbit-config
 
 worker:
@@ -213,8 +212,7 @@ worker:
       volumeMounts:
       - mountPath: /tmp/ray
         name: ray-logs
-      - mountPath: /fluent-bit/etc/fluent-bit.conf
-        subPath: fluent-bit.conf
+      - mountPath: /fluent-bit/etc/
         name: fluentbit-config
 
 # The map's key is used as the groupName.
