@@ -18,6 +18,6 @@ resource "helm_release" "ray-cluster" {
   chart      = "ray-cluster"
   namespace  = var.namespace
   values = [
-    file("${path.module}/kuberay-values.yaml")
+    file("${path.module}/kuberay-tpu-values.yaml")
   ]
 }

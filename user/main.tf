@@ -46,7 +46,6 @@ module "service_accounts" {
 module "kuberay" {
   source = "./modules/kuberay"
 
-  depends_on = [module.kubernetes]
   namespace  = var.namespace
 }
 
@@ -61,6 +60,5 @@ module "prometheus" {
 module "jupyterhub" {
   source = "./modules/jupyterhub"
 
-  depends_on = [module.kubernetes]
   namespace  = var.namespace
 }
