@@ -69,6 +69,10 @@ head:
   #   value: "1"
     - name: RAY_memory_monitor_refresh_ms
       value: "0"
+    - name: TPU_WORKER_ID
+      value: "0"
+    - name: TPU_WORKER_HOSTNAMES
+      value: ray-worker-host-0.ray-worker,ray-worker-host-1.ray-worker
   envFrom: []
     # - secretRef:
     #     name: my-env-secret
@@ -98,10 +102,15 @@ head:
   annotations: {}
   nodeSelector:
   #  iam.gke.io/gke-metadata-server-enabled: "true"
-    cloud.google.com/gke-tpu-accelerator: tpu-v4-lite-device
-    cloud.google.com/gke-tpu-topology: 2x2
+    cloud.google.com/gke-tpu-accelerator: tpu-v4-podslice
+    cloud.google.com/gke-tpu-topology: 2x2x2
   tolerations: []
   affinity: {}
+  #ports:
+  #- name: jax-coordinator
+  #containerPort: 8471
+  hostname: ray-worker-host-0
+  subdomain: ray-worker
   # Ray container security context.
   securityContext:
     privileged: true
@@ -141,7 +150,7 @@ worker:
   # uncomment the line below
   # disabled: true
   groupName: workergroup
-  replicas: 0
+  replicas: 1
   type: worker
   labels:
     cloud.google.com/gke-ray-node-type: worker
@@ -153,9 +162,13 @@ worker:
   initContainerSecurityContext: {}
   # containerEnv specifies environment variables for the Ray container,
   # Follows standard K8s container env schema.
-  containerEnv: []
+  containerEnv:
   # - name: EXAMPLE_ENV
   #   value: "1"
+  - name: TPU_WORKER_ID
+    value: "1"
+  - name: TPU_WORKER_HOSTNAMES
+    value: ray-worker-host-0.ray-worker,ray-worker-host-1.ray-worker
   envFrom: []
     # - secretRef:
     #     name: my-env-secret
@@ -185,11 +198,16 @@ worker:
     key: value
   nodeSelector:
     #iam.gke.io/gke-metadata-server-enabled: "true"
-    cloud.google.com/gke-tpu-accelerator: tpu-v4-lite-device
-    cloud.google.com/gke-tpu-topology: 2x2
+    cloud.google.com/gke-tpu-accelerator: tpu-v4-podslice
+    cloud.google.com/gke-tpu-topology: 2x2x2
   tolerations: []
   affinity: {}
   # Ray container security context.
+  hostname: ray-worker-host-1
+  subdomain: ray-worker
+  ports:
+  - name: jax-coordinator
+    containerPort: 8471
   securityContext:
     privileged: true
   volumes:
