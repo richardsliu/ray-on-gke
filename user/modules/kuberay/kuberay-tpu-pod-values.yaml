@@ -61,7 +61,7 @@ head:
   rayStartParams:
     dashboard-host: '0.0.0.0'
     block: 'true'
-    resources: '"{\"google.com/tpu\": 4}"'
+    resources: '"{\"TPUPOD-$(POD_NAME)\": 1,  \"google.com/tpu\": 4}"'
   # containerEnv specifies environment variables for the Ray container,
   # Follows standard K8s container env schema.
   containerEnv:
@@ -73,6 +73,10 @@ head:
       value: "0"
     - name: TPU_WORKER_HOSTNAMES
       value: ray-worker-host-0.ray-worker,ray-worker-host-1.ray-worker
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
   envFrom: []
     # - secretRef:
     #     name: my-env-secret
@@ -156,7 +160,7 @@ worker:
     cloud.google.com/gke-ray-node-type: worker
   rayStartParams:
     block: 'true'
-    resources: '"{\"google.com/tpu\": 4}"'
+    resources: '"{\"TPUPOD-$(POD_NAME)\": 1,  \"google.com/tpu\": 4}"'
   initContainerImage: 'busybox:1.28'  # Enable users to specify the image for init container. Users can pull the busybox image from their private repositories.
   # Security context for the init container.
   initContainerSecurityContext: {}
@@ -169,6 +173,10 @@ worker:
     value: "1"
   - name: TPU_WORKER_HOSTNAMES
     value: ray-worker-host-0.ray-worker,ray-worker-host-1.ray-worker
+  - name: POD_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.name
   envFrom: []
     # - secretRef:
     #     name: my-env-secret

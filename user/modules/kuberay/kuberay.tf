@@ -29,6 +29,6 @@ resource "helm_release" "ray-cluster" {
   chart = "${path.module}/../../../../kuberay/helm-chart/ray-cluster/"
   namespace  = var.namespace
   values = [
-    file("${path.module}/kuberay-tpu-values.yaml")
+    file("${path.module}/kuberay-tpu-pod-values.yaml")
   ]
 }
