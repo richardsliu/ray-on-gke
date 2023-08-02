@@ -12,31 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#resource "google_service_account" "sa" {
-#  project      = "${var.project_id}"
-#  account_id   = "${var.service_account}"
-#  display_name = "Managed prometheus service account"
-#}
+resource "google_service_account" "sa" {
+  project      = "${var.project_id}"
+  account_id   = "${var.service_account}"
+  display_name = "Managed prometheus service account"
+}
 
 resource "google_service_account_iam_binding" "workload-identity-user" {
-  service_account_id = "projects/ricliu-gke-dev/serviceAccounts/richard-system-account@ricliu-gke-dev.iam.gserviceaccount.com"
-  ###"richard-system-account@ricliu-gke-dev.iam.gserviceaccount.com" ###google_service_account.sa.name
+  service_account_id = google_service_account.sa.name
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
     "serviceAccount:${var.project_id}.svc.id.goog[${var.namespace}/default]",
   ]
 }
-
 resource "google_project_iam_binding" "monitoring-viewer" {
   project = var.project_id
   role    = "roles/monitoring.viewer"
-
   members = [
     "serviceAccount:${var.project_id}.svc.id.goog[${var.namespace}/default]",
   ]
 }
-
 resource "kubernetes_annotations" "default" {
   api_version = "v1"
   kind        = "ServiceAccount"
@@ -44,7 +40,6 @@ resource "kubernetes_annotations" "default" {
     name = "default"
   }
   annotations = {
-    "iam.gke.io/gcp-service-account" = "projects/ricliu-gke-dev/serviceAccounts/richard-system-account@ricliu-gke-dev.iam.gserviceaccount.com"
-###"richard-system-account@ricliu-gke-dev.iam.gserviceaccount.com"  ###"${google_service_account.sa.account_id}@${var.project_id}.iam.gserviceaccount.com"
+    "iam.gke.io/gcp-service-account" = "${google_service_account.sa.account_id}@${var.project_id}.iam.gserviceaccount.com"
   }
 }

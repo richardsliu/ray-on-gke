@@ -12,6 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+data "local_file" "wait_gcs_ready_yaml" {
+  filename = "${path.module}/config/wait-gcs-ready.yaml"
+}
+
+resource "kubectl_manifest" "wait_gcs_ready_configmap" {
+  override_namespace = var.namespace
+  yaml_body          = data.local_file.wait_gcs_ready_yaml.content
+}
+
 resource "helm_release" "ray-cluster" {
   name       = "example-cluster"
   repository = "https://ray-project.github.io/kuberay-helm/"

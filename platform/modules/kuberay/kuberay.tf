@@ -16,4 +16,7 @@ resource "helm_release" "kuberay-operator" {
   name       = "kuberay-operator"
   repository = "https://ray-project.github.io/kuberay-helm/"
   chart      = "kuberay-operator"
+  values = [
+    file("${path.module}/kuberay-operator-values.yaml")
+  ]
 }

@@ -156,14 +156,9 @@ worker:
     cloud.google.com/gke-ray-node-type: worker
   rayStartParams:
     block: 'true'
-  initContainerImage: 'busybox:1.28'  # Enable users to specify the image for init container. Users can pull the busybox image from their private repositories.
-  # Security context for the init container.
-  initContainerSecurityContext: {}
   # containerEnv specifies environment variables for the Ray container,
   # Follows standard K8s container env schema.
   containerEnv:
-  - name: ENABLE_INIT_CONTAINER_INJECTION
-    value: "false"
   # - name: EXAMPLE_ENV
   #   value: "1"
   envFrom: []
@@ -209,6 +204,10 @@ worker:
     - name: fluentbit-config
       configMap:
         name: fluentbit-config
+    - name: wait-gcs-ready
+      configMap:
+        name: wait-gcs-ready
+        defaultMode: 0777
     - name: gcs-fuse-csi-ephemeral
       csi:
         driver: gcsfuse.csi.storage.gke.io
@@ -223,6 +222,16 @@ worker:
     - name: gcs-fuse-csi-ephemeral
       mountPath: /data
       readOnly: true
+  initContainers:
+    - name: wait-gcs-ready
+      image: rayproject/ray:2.3.0-py310-gpu 
+      command: ["/bin/wait-gcs-ready.sh"]
+      args: ["$(FQ_RAY_IP)", "6379", "$(FQ_RAY_IP)", "6379"]
+      volumeMounts:
+      - mountPath: /bin/wait-gcs-ready.sh
+        name: wait-gcs-ready
+        readOnly: true
+        subPath: wait-gcs-ready.sh
   # sidecarContainers specifies additional containers to attach to the Ray pod.
   # Follows standard K8s container spec.
   sidecarContainers:
