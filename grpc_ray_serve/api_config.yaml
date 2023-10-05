@@ -1,0 +1,17 @@
+type: google.api.Service
+config_version: 3
+
+#
+# Name of the service configuration.
+#
+name: stable-diffusion.endpoints.ricliu-gke-dev.cloud.goog
+#x-google-endpoints:
+#- name: "stable-diffusion.endpoints.ricliu-gke-dev.cloud.goog"
+#  target: "35.226.110.103"
+
+#
+# API title to appear in the user interface (Google Cloud Console).
+#
+title: StableDiffusion gRPC API
+#apis:
+#- name: stable-diffusion

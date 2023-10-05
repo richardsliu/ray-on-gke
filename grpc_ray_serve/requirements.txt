@@ -1,0 +1,10 @@
+IPython
+boto3==1.26
+botocore==1.29 
+datasets
+diffusers
+fastapi==0.96
+accelerate>=0.16.0
+transformers>=4.26.0
+numpy<1.24
+torch
