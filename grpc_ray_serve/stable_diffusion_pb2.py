@@ -19,6 +19,7 @@ _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'stable_diffusion_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
+
   DESCRIPTOR._options = None
   _globals['_STABLEDIFFUSIONREQUEST']._serialized_start=26
   _globals['_STABLEDIFFUSIONREQUEST']._serialized_end=66

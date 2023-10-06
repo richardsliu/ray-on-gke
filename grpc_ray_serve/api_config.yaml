@@ -15,3 +15,8 @@ name: stable-diffusion.endpoints.ricliu-gke-dev.cloud.goog
 title: StableDiffusion gRPC API
 #apis:
 #- name: stable-diffusion
+
+
+endpoints:
+- name: stable-diffusion.endpoints.ricliu-gke-dev.cloud.goog
+  target: 130.211.237.240

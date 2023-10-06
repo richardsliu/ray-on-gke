@@ -1,35 +1,10 @@
 from io import BytesIO
-#from fastapi import FastAPI
-#from fastapi.responses import Response
 import torch
 
 from ray import serve
-from ray.serve.drivers import gRPCIngress
+from ray.serve.config import gRPCOptions
 import stable_diffusion_pb2_grpc, stable_diffusion_pb2
-
-
-#app = FastAPI()
-
-
-#@serve.deployment(num_replicas=1, route_prefix="/")
-#@serve.ingress(app)
-#class APIIngress:
-#    def __init__(self, diffusion_model_handle) -> None:
-#        self.handle = diffusion_model_handle
-#
-#    @app.get(
-#        "/imagine",
-#        responses={200: {"content": {"image/png": {}}}},
-#        response_class=Response,
-#    )
-#    async def generate(self, prompt: str, img_size: int = 512):
-#        assert len(prompt), "prompt parameter cannot be empty"
-#
-#        image_ref = await self.handle.generate.remote(prompt, img_size=img_size)
-#        image = await image_ref
-#        file_stream = BytesIO()
-#        image.save(file_stream, "PNG")
-#        return Response(content=file_stream.getvalue(), media_type="image/png")
+from io import BytesIO
 
 
 @serve.deployment(
@@ -57,10 +32,26 @@ class StableDiffusionV2: #(stable_diffusion_pb2_grpc.StableDiffusionServiceServi
         assert len(prompt), "prompt parameter cannot be empty"
 
         image = self.pipe(prompt, height=512, width=512).images[0]
-        return stable_diffusion_pb2.StableDiffusionResponse(contents=image)
+
+        file_stream = BytesIO()
+        image.save(file_stream, "PNG")
+
+        return stable_diffusion_pb2.StableDiffusionResponse(contents=file_stream.getvalue())
 
 deployment = StableDiffusionV2.bind()
 #serve.run(deployment, host="0.0.0.0")
+
+grpc_port = 8888
+grpc_servicer_functions = [
+    "stable_diffusion_pb2_grpc.add_StableDiffusionServiceServicer_to_server",
+]
+serve.start(
+    grpc_options=gRPCOptions(
+        port=grpc_port,
+        grpc_servicer_functions=grpc_servicer_functions,
+    ),
+)
+
 app1 = "app1"
 serve.run(deployment, name=app1, route_prefix=f"/{app1}")
 
