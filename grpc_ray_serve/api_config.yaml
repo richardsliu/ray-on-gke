@@ -13,8 +13,8 @@ name: stable-diffusion.endpoints.ricliu-gke-dev.cloud.goog
 # API title to appear in the user interface (Google Cloud Console).
 #
 title: StableDiffusion gRPC API
-#apis:
-#- name: stable-diffusion
+apis:
+- name: StableDiffusionService
 
 
 endpoints:
